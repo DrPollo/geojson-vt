@@ -81,7 +81,7 @@ function addFeature(tile, feature, tolerance, noSimplify) {
         var tileFeature = {
             geometry: simplified,
             type: type,
-            tags: feature.tags || null
+            features: feature.features || null
         };
         if (feature.id !== null) {
             tileFeature.id = feature.id;
