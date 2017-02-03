@@ -33,18 +33,18 @@ function convertFeature(features, feature, tolerance) {
     var geom = feature.geometry,
         type = geom.type,
         coords = geom.coordinates,
-        tags = feature.properties,
+        properties = feature.properties,
         id = feature.id,
         i, j, rings, projectedRing;
 
     if (type === 'Point') {
-        features.push(createFeature(tags, 1, [projectPoint(coords)], id));
+        features.push(createFeature(properties, 1, [projectPoint(coords)], id));
 
     } else if (type === 'MultiPoint') {
-        features.push(createFeature(tags, 1, project(coords), id));
+        features.push(createFeature(properties, 1, project(coords), id));
 
     } else if (type === 'LineString') {
-        features.push(createFeature(tags, 2, [project(coords, tolerance)], id));
+        features.push(createFeature(properties, 2, [project(coords, tolerance)], id));
 
     } else if (type === 'MultiLineString' || type === 'Polygon') {
         rings = [];
@@ -53,7 +53,7 @@ function convertFeature(features, feature, tolerance) {
             if (type === 'Polygon') projectedRing.outer = (i === 0);
             rings.push(projectedRing);
         }
-        features.push(createFeature(tags, type === 'Polygon' ? 3 : 2, rings, id));
+        features.push(createFeature(properties, type === 'Polygon' ? 3 : 2, rings, id));
 
     } else if (type === 'MultiPolygon') {
         rings = [];
@@ -64,13 +64,13 @@ function convertFeature(features, feature, tolerance) {
                 rings.push(projectedRing);
             }
         }
-        features.push(createFeature(tags, 3, rings, id));
+        features.push(createFeature(properties, 3, rings, id));
 
     } else if (type === 'GeometryCollection') {
         for (i = 0; i < geom.geometries.length; i++) {
             convertFeature(features, {
                 geometry: geom.geometries[i],
-                properties: tags
+                properties: properties
             }, tolerance);
         }
 
