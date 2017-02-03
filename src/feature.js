@@ -7,7 +7,7 @@ function createFeature(tags, type, geom, id) {
         id: id || null,
         type: type,
         geometry: geom,
-        tags: tags || null,
+        features: features || null,
         min: [Infinity, Infinity], // initial bbox values
         max: [-Infinity, -Infinity]
     };
