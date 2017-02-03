@@ -2,7 +2,7 @@
 
 module.exports = createFeature;
 
-function createFeature(tags, type, geom, id) {
+function createFeature(properties, type, geom, id) {
     var feature = {
         id: id || null,
         type: type,
